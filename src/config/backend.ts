@@ -1,4 +1,6 @@
-export const PROJECT_URL = `http://localhost:3000`;
+// export const PROJECT_URL = `http://localhost:3000`;
+
+export const PROJECT_URL = `https://latest-mojoxy-backend.vercel.app`;
 
 export const BASE_API_URL = "/api";
 

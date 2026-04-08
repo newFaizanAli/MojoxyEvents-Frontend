@@ -1,0 +1,88 @@
+import { toastError } from "./toast_utils";
+
+export const handleApiError = (
+  error: string | Error | any,
+  fallbackMsg = "Something went wrong",
+) => {
+  let msg = fallbackMsg;
+
+  try {
+    if (
+      error &&
+      typeof error === "object" &&
+      error.response &&
+      typeof error.response === "object"
+    ) {
+      const data = error.response.data;
+
+      if (typeof data === "string") {
+        msg = data;
+      } else if (data && typeof data === "object" && "message" in data) {
+        msg = data.message;
+      }
+    } else if (error?.message) {
+      msg = error.message;
+    } else if (typeof error === "string") {
+      msg = error;
+    }
+  } catch (error) {
+    console.error("Unexpected error shape:", error);
+  }
+
+  toastError(msg);
+};
+
+export const getInitials = (name: string) => {
+  if (!name) return "";
+  const words = name.trim().split(" ");
+  if (words.length === 1) {
+    return words[0].charAt(0).toUpperCase();
+  } else {
+    return (
+      words[0].charAt(0).toUpperCase() +
+      words[words.length - 1].charAt(0).toUpperCase()
+    );
+  }
+};
+
+export const artistParseOrAppend = (
+  formData: FormData,
+  key: string,
+  value: any,
+) => {
+  if (!value) return;
+  if (
+    key === "genres" ||
+    key === "event_types" ||
+    key === "languages" ||
+    key === "perform_locations" ||
+    key === "achievements" ||
+    key === "gallery"
+  ) {
+    formData.append(key, JSON.stringify(value));
+  } else if (key === "user" || key === "category") {
+    if (typeof value === "object" && "_id" in value)
+      formData.append(key, value._id);
+    else if (typeof value === "string") formData.append(key, value);
+  } else if (value instanceof File) {
+    formData.append(key, value);
+  } else {
+    formData.append(key, String(value));
+  }
+};
+
+export const formatDate = (dateString: string): string => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+export const formatTime = (time: string) => {
+  const [hours, minutes] = time.split(":");
+  const hour = parseInt(hours);
+  const ampm = hour >= 12 ? "PM" : "AM";
+  const displayHour = hour % 12 || 12;
+  return `${displayHour}:${minutes} ${ampm}`;
+};

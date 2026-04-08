@@ -35,11 +35,11 @@ const CategoriesTable = () => {
         () => [
             {
                 title: "Slug",
-                render: (c) => c.slug,
+                render: (c: Category) => c.slug,
             },
             {
                 title: "Name",
-                render: (c) => c.name,
+                render: (c: Category) => c.name,
             },
             {
                 title: "Actions",

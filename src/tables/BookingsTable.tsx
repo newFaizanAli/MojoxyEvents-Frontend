@@ -63,31 +63,31 @@ const BookingsTable = () => {
 
             {
                 title: "User",
-                render: (u: Booking) => (
+                render: (b: Booking) => (
                     <div>
-                        <span className="block font-medium text-gray-800">{u.user?.name || ""}</span>
-                        <span className="block text-xs text-gray-500">{u.user?.email || ""}</span>
+                        <span className="block font-medium text-gray-800">{b.user?.name || ""}</span>
+                        <span className="block text-xs text-gray-500">{b.user?.email || ""}</span>
                     </div>
                 ),
             },
 
             {
                 title: "Date",
-                render: (b) => formatDate(b?.event_date ?? ""),
+                render: (b: Booking) => formatDate(b?.event_date ?? ""),
             },
 
             {
                 title: "Time",
-                render: (b) => formatTime(b?.event_time ?? ""),
+                render: (b: Booking) => formatTime(b?.event_time ?? ""),
             },
             {
                 title: "Actions",
-                render: (u: Booking) => (
+                render: (b: Booking) => (
                     <div className="flex justify-center gap-2">
                         <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => handleEdit(u._id!)}
+                            onClick={() => handleEdit(b._id!)}
                         >
                             <PencilIcon className="h-4 w-4 me-2" />
                             Edit
@@ -96,7 +96,7 @@ const BookingsTable = () => {
                         <Button
                             size="sm"
                             variant="danger"
-                            onClick={() => handleDelete(u._id!)}
+                            onClick={() => handleDelete(b._id!)}
                         >
                             <TrashBinIcon className="h-4 w-4" />
                             Delete

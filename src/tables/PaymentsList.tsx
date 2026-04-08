@@ -37,7 +37,7 @@ const PaymentsTable = () => {
         () => [
             {
                 title: "ID",
-                render: (p) => p.payment_id,
+                render: (p: Payment) => p.payment_id,
             },
             {
                 title: "Actions",

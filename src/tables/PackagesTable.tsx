@@ -35,11 +35,11 @@ const PackagesTable = () => {
         () => [
             {
                 title: "Title",
-                render: (p) => p.title,
+                render: (p: Package) => p.title,
             },
             {
                 title: "Artist",
-                render: (p) => p?.artist?.stage_name,
+                render: (p: Package) => p?.artist?.stage_name,
             },
             {
                 title: "Actions",

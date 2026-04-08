@@ -35,7 +35,9 @@ const AristsTable = () => {
         () => [
             {
                 title: "Image",
-                render: (a) => (
+                render: (a: {
+                    img_link: File | string;
+                }) => (
                     <img
                         src={
                             a.img_link instanceof File
@@ -56,7 +58,7 @@ const AristsTable = () => {
             },
             {
                 title: "Package",
-                render: (a) => (
+                render: (a: Artist) => (
                     <Button
                         variant="primary"
                         onClick={() =>
@@ -71,7 +73,7 @@ const AristsTable = () => {
             },
             {
                 title: "Actions",
-                render: (a) => (
+                render: (a: Artist) => (
                     <>
                         <Button
                             variant="outline"

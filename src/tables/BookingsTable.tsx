@@ -40,7 +40,7 @@ const BookingsTable = () => {
         () => [
             {
                 title: "ID",
-                render: (b) => b.booking_id,
+                render: (b: Booking) => b.booking_id,
             },
 
             {

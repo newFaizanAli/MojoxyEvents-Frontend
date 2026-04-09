@@ -9,6 +9,7 @@ const AristBookingsList = lazy(() => import("./artist/BookingList"))
 // user
 const UserPage = lazy(() => import("./user/UserPage"))
 const UsersList = lazy(() => import("./user/UsersList"))
+const ProfilePage = lazy(() => import("./user/ProfilePage"))
 // category
 const CategoryPage = lazy(() => import("./category/CategoryPage"))
 const CategoriesList = lazy(() => import("./category/CategoriesList"))
@@ -28,6 +29,7 @@ export {
     DashboardPage,
     UserPage,
     UsersList,
+    ProfilePage,
     ArtistBooking,
     ArtistPage,
     ArtistsList,

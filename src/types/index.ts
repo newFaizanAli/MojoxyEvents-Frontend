@@ -24,6 +24,8 @@ import type {
 
 import type { Payment, PaymentBooking, PaymentFormData } from "./payment";
 
+import type { SignUpUser, SignupErrors } from "./sign_up";
+
 export type {
   User,
   UserFormData,
@@ -55,4 +57,7 @@ export type {
   Payment,
   PaymentBooking,
   PaymentFormData,
+  // auth
+  SignUpUser,
+  SignupErrors,
 };

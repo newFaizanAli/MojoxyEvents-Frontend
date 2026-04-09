@@ -23,6 +23,7 @@ export const ROUTES_PATHS = {
       BOOKING: {
         LIST: "/dashboard/user/booking/list",
       },
+      PROFILE: "/dashboard/user/profile",
     },
     ARTIST: {
       BASE: (stage_name?: string) =>

@@ -1,18 +1,14 @@
 import { MainLayout, AuthLayout, DashboardLayout, AppLayout } from "../layout";
 import { ROUTES_PATHS } from "./route_paths";
 import ProtectedRoute from "./protected";
-import { SignInPage } from "../pages/auth";
+import { ForgotPassword, PasswordOTPVerify, ResetPassword, SignInPage, SignUpPage } from "../pages/auth";
 import { HomePage, CategoriesPage, ArtistsPage, ArtistProfile } from "../pages/public";
 import {
-    ArtistBooking, DashboardPage, UserPage, UsersList,
+    ArtistBooking, DashboardPage, UserPage, UsersList, ProfilePage,
     ArtistPage, ArtistsList, AristBookingsList, CategoryPage, CategoriesList,
     PackagePage, PackagesList, PaymentPage, PaymentList,
     BookingPage, BookingsList, SelfBookingsList, ViewBookingPage,
-
 } from "../pages/protected";
-
-
-
 
 
 const app_routes = [
@@ -57,6 +53,7 @@ const app_routes = [
                                 children: [
                                     { path: "artist/:slug/book", element: <ArtistBooking /> },
                                     { path: "booking/:booking_id", element: <ViewBookingPage /> },
+
                                 ],
                             },
                         ],
@@ -72,6 +69,7 @@ const app_routes = [
                                 children: [
                                     { path: ROUTES_PATHS?.DASHBOARD?.USER?.LIST, element: <UsersList /> },
                                     { path: ROUTES_PATHS?.DASHBOARD?.USER?.BASE, element: <UserPage /> },
+                                    { path: ROUTES_PATHS?.DASHBOARD.USER?.PROFILE, element: <ProfilePage /> },
                                     // artist
                                     { path: ROUTES_PATHS?.DASHBOARD?.ARTIST?.LIST, element: <ArtistsList /> },
                                     { path: "artist/:stage_name?", element: <ArtistPage /> },
@@ -92,19 +90,6 @@ const app_routes = [
                         ],
                     },
 
-
-                    //   {
-                    //     element: <ProtectedRoute allowedRoles={["admin", "user", "artist"]} />,
-                    //     children: [
-                    //       {
-                    //         element: <HeaderLayout />,
-                    //         children: [
-                    //           { path: ROUTES_PATHS?.PRIVATE?.PROFILE, element: <Pages.ProfilePage /> },
-                    //           { path: "booking/single/:booking_id", element: <Pages.SingleBookingPage /> },
-                    //         ],
-                    //       },
-                    //     ],
-                    //   },
 
                     {
                         element: <ProtectedRoute allowedRoles={["artist"]} />,
@@ -131,10 +116,10 @@ const app_routes = [
         path: "auth",
         children: [
             { path: ROUTES_PATHS?.AUTH.SIGNIN, element: <SignInPage /> },
-            { path: ROUTES_PATHS?.AUTH.SIGNUP, element: <div>Sign Up</div> },
-            { path: ROUTES_PATHS?.AUTH.FORGOT_PASSWORD, element: <div>Forgot Password</div> },
-            { path: "/auth/verify-otp/:email", element: <div>Verify OTP</div> },
-            { path: "/auth/reset-password/:token", element: <div>Reset Password</div> },
+            { path: ROUTES_PATHS?.AUTH.SIGNUP, element: <SignUpPage /> },
+            { path: ROUTES_PATHS?.AUTH.FORGOT_PASSWORD, element: <ForgotPassword /> },
+            { path: "/auth/verify-otp/:email", element: <PasswordOTPVerify /> },
+            { path: "/auth/reset-password/:token", element: <ResetPassword /> },
         ],
     },
 

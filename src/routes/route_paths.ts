@@ -54,6 +54,9 @@ export const ROUTES_PATHS = {
         ADD: (slug: string) => `/artist/${slug}/book`,
       },
     },
+    BOOKING: {
+      VIEW: (booking_id: string) => `/booking/${booking_id}`,
+    },
   },
   DENIED: "/denied",
   NOT_FOUND: "*",

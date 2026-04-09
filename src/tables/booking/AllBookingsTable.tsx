@@ -1,14 +1,15 @@
 import { useMemo, useCallback } from "react";
 import { useNavigate } from "react-router";
-import { AudioIcon, PencilIcon, TrashBinIcon } from "../icons";
-import { Booking } from "../types";
-import { useBookingStore } from "../store";
-import { ROUTES_PATHS } from "../routes/route_paths";
-import DataTable from "../components/tables/data_table";
-import { Button } from "../components/ui/forms";
-import { formatDate, formatTime } from "../utilities/functions";
+import { AudioIcon, PencilIcon, TrashBinIcon } from "../../icons";
+import { Booking } from "../../types";
+import { useBookingStore } from "../../store";
+import { ROUTES_PATHS } from "../../routes/route_paths";
+import DataTable from "../../components/tables/data_table";
+import { Button } from "../../components/ui/forms";
+import { formatDate, formatTime, getStatusColor } from "../../utilities/functions";
+import { Ticket } from "lucide-react";
 
-const BookingsTable = () => {
+const AllBookingsTable = () => {
     const navigate = useNavigate();
     const { bookings, fetchBookings, deleteBooking, isFetched } = useBookingStore();
 
@@ -35,12 +36,25 @@ const BookingsTable = () => {
         [deleteBooking]
     );
 
+    console.log(bookings)
 
     const columns = useMemo(
         () => [
+
             {
                 title: "ID",
-                render: (b: Booking) => b.booking_id,
+                render: (u: Booking) => (
+                    <div className="flex justify-center gap-2">
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => navigate(ROUTES_PATHS.PROTECTED.BOOKING.VIEW(u._id!))}
+                        >
+                            <Ticket className="h-4 w-4 me-2" />
+                            {u?.booking_id}
+                        </Button>
+                    </div>
+                ),
             },
 
             {
@@ -79,6 +93,14 @@ const BookingsTable = () => {
             {
                 title: "Time",
                 render: (b: Booking) => formatTime(b?.event_time ?? ""),
+            },
+            {
+                title: "Status",
+                render: (u: Booking) => (
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(u.status)} bg-white`}>
+                        {u.status.toUpperCase()}
+                    </span>
+                ),
             },
             {
                 title: "Actions",
@@ -122,4 +144,4 @@ const BookingsTable = () => {
     );
 };
 
-export default BookingsTable;
+export default AllBookingsTable;

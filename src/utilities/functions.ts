@@ -1,3 +1,4 @@
+import { Booking } from "../types";
 import { toastError } from "./toast_utils";
 
 export const handleApiError = (
@@ -85,4 +86,14 @@ export const formatTime = (time: string) => {
   const ampm = hour >= 12 ? "PM" : "AM";
   const displayHour = hour % 12 || 12;
   return `${displayHour}:${minutes} ${ampm}`;
+};
+
+export const getStatusColor = (status: Booking["status"]) => {
+  const colors = {
+    pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    in_progress: "bg-blue-100 text-blue-800 border-blue-200",
+    approved: "bg-green-100 text-green-800 border-green-200",
+    cancel: "bg-red-100 text-red-800 border-red-200",
+  };
+  return colors[status] || colors.pending;
 };

@@ -111,11 +111,11 @@ export const SIDEBAR_ITEMS = [
             //     allowed: ["artist"],
             //   },
 
-            //   {
-            //     name: "My Bookings",
-            //     path: ROUTES_PATHS?.DASHBOARD?.BOOKING?.MY_BOOKINGS,
-            //     allowed: ["admin", "user", "artist"],
-            //   },
+            {
+                name: "My Bookings",
+                path: ROUTES_PATHS?.DASHBOARD?.USER?.BOOKING?.LIST,
+                allowed: ["admin", "user", "artist"],
+            },
 
 
         ],

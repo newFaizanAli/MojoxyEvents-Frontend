@@ -18,6 +18,8 @@ const PackagesList = lazy(() => import("./package/PackagesList"))
 // booking
 const BookingPage = lazy(() => import("./booking/BookingPage"))
 const BookingsList = lazy(() => import("./booking/BookingsList"))
+const SelfBookingsList = lazy(() => import("./booking/SelfBookingsList"))
+const ViewBookingPage = lazy(() => import("./booking/ViewBookingPage"))
 // payment
 const PaymentPage = lazy(() => import("./payment/PaymentPage"))
 const PaymentList = lazy(() => import("./payment/PaymentsList"))
@@ -35,6 +37,8 @@ export {
     PackagesList,
     BookingPage,
     BookingsList,
+    ViewBookingPage,
+    SelfBookingsList,
     PaymentPage,
     PaymentList
 }

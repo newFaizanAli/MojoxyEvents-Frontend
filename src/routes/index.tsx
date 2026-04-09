@@ -6,8 +6,9 @@ import { HomePage, CategoriesPage, ArtistsPage, ArtistProfile } from "../pages/p
 import {
     ArtistBooking, DashboardPage, UserPage, UsersList,
     ArtistPage, ArtistsList, CategoryPage, CategoriesList,
-    PackagePage, PackagesList, BookingPage, BookingsList,
-    PaymentPage, PaymentList
+    PackagePage, PackagesList, PaymentPage, PaymentList,
+    BookingPage, BookingsList, SelfBookingsList, ViewBookingPage,
+
 } from "../pages/protected";
 
 
@@ -42,7 +43,7 @@ const app_routes = [
                                 element: <DashboardLayout />,
                                 children: [
                                     { index: true, element: <DashboardPage /> },
-                                    //   { path: ROUTES_PATHS?.DASHBOARD?.BOOKING?.MY_BOOKINGS, element: <SuspenseComp><Pages.SelfBookingPage /></SuspenseComp> },
+                                    { path: ROUTES_PATHS?.DASHBOARD?.USER?.BOOKING?.LIST, element: <SelfBookingsList /> },
                                 ],
                             },
                         ],
@@ -55,6 +56,7 @@ const app_routes = [
                                 element: <MainLayout />,
                                 children: [
                                     { path: "artist/:slug/book", element: <ArtistBooking /> },
+                                    { path: "booking/:booking_id", element: <ViewBookingPage /> },
                                 ],
                             },
                         ],

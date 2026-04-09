@@ -1,4 +1,4 @@
-import { BookingsTable } from "../../../tables"
+import { AllBookingsTable } from "../../../tables"
 import { PageMeta } from "../../../components/shared"
 
 
@@ -8,7 +8,7 @@ const BookingsList = () => {
         <div>
             <PageMeta title="Bookings List" />
             <div className="space-y-6">
-                <BookingsTable />
+                <AllBookingsTable />
             </div>
         </div>
     )

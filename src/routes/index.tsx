@@ -5,7 +5,7 @@ import { SignInPage } from "../pages/auth";
 import { HomePage, CategoriesPage, ArtistsPage, ArtistProfile } from "../pages/public";
 import {
     ArtistBooking, DashboardPage, UserPage, UsersList,
-    ArtistPage, ArtistsList, CategoryPage, CategoriesList,
+    ArtistPage, ArtistsList, AristBookingsList, CategoryPage, CategoriesList,
     PackagePage, PackagesList, PaymentPage, PaymentList,
     BookingPage, BookingsList, SelfBookingsList, ViewBookingPage,
 
@@ -106,17 +106,17 @@ const app_routes = [
                     //     ],
                     //   },
 
-                    //   {
-                    //     element: <ProtectedRoute allowedRoles={["artist"]} />,
-                    //     children: [
-                    //       {
-                    //         element: <DashboardLayout />,
-                    //         children: [
-                    //           { path: ROUTES_PATHS?.DASHBOARD?.BOOKING.ARTIST, element: <Pages.ViewArtistBookingPage /> },
-                    //         ],
-                    //       },
-                    //     ],
-                    //   },
+                    {
+                        element: <ProtectedRoute allowedRoles={["artist"]} />,
+                        children: [
+                            {
+                                element: <DashboardLayout />,
+                                children: [
+                                    { path: ROUTES_PATHS?.DASHBOARD?.ARTIST?.BOOKING?.LIST, element: <AristBookingsList /> },
+                                ],
+                            },
+                        ],
+                    },
 
 
 

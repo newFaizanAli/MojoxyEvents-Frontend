@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { parseJwt } from "../services/jwt";
+import { ROUTES_PATHS } from "../routes/route_paths";
 
 interface AuthState {
   user: null | {
@@ -39,7 +40,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
     //   set({ logoutTimerId: null });
     // }
 
-    // window.location.href = ROUTES_PATHS?.AUTH.SIGNIN;
+    window.location.href = ROUTES_PATHS?.AUTH.SIGNIN;
   },
 
   autoLogoutOnExpiry: (token: string) => {

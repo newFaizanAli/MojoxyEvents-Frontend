@@ -1,12 +1,12 @@
 import { useMemo, useCallback } from "react";
 import { useNavigate } from "react-router";
-import { AudioIcon, PencilIcon, TrashBinIcon } from "../../icons";
-import { Booking } from "../../types";
-import { useBookingStore } from "../../store";
-import { ROUTES_PATHS } from "../../routes/route_paths";
-import DataTable from "../../components/tables/data_table";
-import { Button } from "../../components/ui/forms";
-import { formatDate, formatTime, getStatusColor } from "../../utilities/functions";
+import { AudioIcon, PencilIcon, TrashBinIcon } from "../icons";
+import { Booking } from "../types";
+import { useBookingStore } from "../store";
+import { ROUTES_PATHS } from "../routes/route_paths";
+import DataTable from "../components/tables/data_table";
+import { Button } from "../components/ui/forms";
+import { formatDate, formatTime, getStatusColor } from "../utilities/functions";
 import { Ticket } from "lucide-react";
 
 const AllBookingsTable = () => {

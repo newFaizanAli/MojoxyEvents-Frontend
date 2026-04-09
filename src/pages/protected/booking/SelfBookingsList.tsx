@@ -11,62 +11,80 @@ interface EditFormData {
     budget: number;
 }
 
+const INITIAL_FORM: EditFormData = {
+    event_date: "",
+    event_time: "",
+    attendees: 0,
+    budget: 0,
+};
+
 const SelfBookingsList = () => {
-    const { fetchSelfBookings, updateBooking } = useBookingStore();
+
+    const fetchSelfBookings = useBookingStore(s => s.fetchSelfBookings);
+    const updateBooking = useBookingStore(s => s.updateBooking);
 
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [editForm, setEditForm] = useState<Partial<EditFormData>>({});
+    const [editForm, setEditForm] = useState<EditFormData>(INITIAL_FORM);
 
 
-    const loadBookings = useCallback(async () => {
-        try {
-            setLoading(true);
-            const data = await fetchSelfBookings();
-            setBookings(data ?? []);
-        } catch (err) {
-            console.error("Load bookings failed:", err);
-        } finally {
-            setLoading(false);
-        }
-    }, [fetchSelfBookings]);
 
     useEffect(() => {
-        loadBookings();
-    }, [loadBookings]);
+        let mounted = true;
+
+        const load = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchSelfBookings();
+
+                if (mounted) setBookings(data ?? []);
+            } catch (err) {
+                console.error("Load bookings failed:", err);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        };
+
+        load();
+
+        return () => {
+            mounted = false; // prevent state update after unmount
+        };
+    }, [fetchSelfBookings]);
 
 
-    const handleEdit = useCallback((booking: Booking) => {
-        if (!booking._id) return;
+    const handleEdit = useCallback((b: Booking) => {
+        if (!b?._id) return;
 
-        setEditingId(booking._id);
+        setEditingId(b._id);
         setEditForm({
-            event_date: booking.event_date?.split("T")[0] ?? "",
-            event_time: booking.event_time ?? "",
-            attendees: booking.attendees ?? 0,
-            budget: booking.budget ?? 0,
+            event_date: b.event_date?.split("T")[0] || "",
+            event_time: b.event_time || "",
+            attendees: b.attendees || 0,
+            budget: b.budget || 0,
         });
     }, []);
 
+
     const handleCancelEdit = useCallback(() => {
         setEditingId(null);
-        setEditForm({});
+        setEditForm(INITIAL_FORM);
     }, []);
+
 
     const handleSaveEdit = useCallback(
         async (bookingId: string) => {
             const booking = bookings.find(b => b._id === bookingId);
             const capacity = booking?.package?.capacity;
 
-            if (capacity && editForm.attendees && editForm.attendees > capacity) {
+            if (capacity && editForm.attendees > capacity) {
                 alert(`Max capacity is ${capacity}`);
                 return;
             }
 
             try {
                 await updateBooking(bookingId, editForm);
-
 
                 setBookings(prev =>
                     prev.map(b =>
@@ -82,8 +100,6 @@ const SelfBookingsList = () => {
         [bookings, editForm, updateBooking, handleCancelEdit]
     );
 
-    const hasBookings = bookings.length > 0;
-
     if (loading) return <Loader />;
 
     return (
@@ -91,7 +107,6 @@ const SelfBookingsList = () => {
             <PageMeta title="My Bookings" />
 
             <div className="max-w-6xl mx-auto">
-
                 {/* Header */}
                 <div className="px-2 pr-14">
                     <h4 className="mb-2 text-2xl font-semibold text-gray-800">
@@ -103,24 +118,25 @@ const SelfBookingsList = () => {
                 </div>
 
                 {/* Content */}
-                {!hasBookings ? (
+                {bookings.length === 0 ? (
                     <ZeroBooking />
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <SuspenseComp>
-                            {bookings.map(booking => {
-                                const isEditing = editingId === booking._id;
+                            {bookings.map(b => {
+                                const isEditing = editingId === b._id;
                                 const canEdit =
-                                    booking.status === "pending" &&
-                                    !booking.accepted_by_artist;
+                                    b.status === "pending" && !b.accepted_by_artist;
 
                                 return (
                                     <SelfBookingCard
-                                        key={booking._id}
-                                        booking={booking}
+                                        key={b._id}
+                                        booking={b}
                                         isEditing={isEditing}
                                         editForm={editForm}
-                                        setEditForm={setEditForm}
+                                        setEditForm={setEditForm as {
+                                            (value: React.SetStateAction<Partial<EditFormData>>): void;
+                                        }}
                                         canEdit={canEdit}
                                         handleEdit={handleEdit}
                                         handleCancelEdit={handleCancelEdit}
@@ -131,7 +147,6 @@ const SelfBookingsList = () => {
                         </SuspenseComp>
                     </div>
                 )}
-
             </div>
         </div>
     );

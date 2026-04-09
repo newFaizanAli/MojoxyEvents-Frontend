@@ -28,6 +28,9 @@ export const ROUTES_PATHS = {
       BASE: (stage_name?: string) =>
         stage_name ? `/dashboard/artist/${stage_name}` : "/dashboard/artist",
       LIST: "/dashboard/artist/list",
+      BOOKING: {
+        LIST: "/dashboard/artist/booking/list",
+      },
     },
     CATEGORY: {
       BASE: (slug: string) =>

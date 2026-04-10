@@ -57,7 +57,7 @@ export const SIDEBAR_ITEMS = [
     {
         icon: <AudioIcon className="w-6 h-6" />,
         name: "Artists",
-        allowed: ["admin"],
+        allowed: ["admin", "artist"],
         submenu: [
             {
                 name: "Artists List",
@@ -66,9 +66,14 @@ export const SIDEBAR_ITEMS = [
             },
             {
                 name: "Add Artist",
-                path: ROUTES_PATHS?.DASHBOARD?.ARTIST?.BASE(""),
+                path: ROUTES_PATHS?.DASHBOARD?.ARTIST?.BASE,
                 allowed: ["admin"],
             },
+            {
+                name: "Artist Profile",
+                path: ROUTES_PATHS?.DASHBOARD?.ARTIST?.PROFILE,
+                allowed: ["artist"],
+            }
         ],
     },
     {

@@ -9,15 +9,21 @@ import { AuthBottomLink, AuthFormHeader, OtpVerification, PasswordField } from "
 import { Button, Input, Label } from "../../components/ui/forms";
 
 
+const SignUpForm = ({
+  role
+}: {
+  role: "artist" | "user";
+}) => {
+
+  const isUser = role === "user";
 
 
-const SignUpForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: "user",
+    role: isUser ? "user" : "artist",
     phone: "",
   });
   const [errors, setErrors] = useState<SignupErrors>({});
@@ -43,6 +49,7 @@ const SignUpForm = () => {
 
       if (res?.success && res.success === true) {
         navigate(ROUTES_PATHS?.AUTH.SIGNIN);
+
       } else {
         setErrors({ form: "Something went wrong during sign up." });
       }
@@ -50,6 +57,7 @@ const SignUpForm = () => {
       console.log(error);
     }
   };
+
 
   const validateForm = () => {
     const newErrors: SignupErrors = {};
@@ -78,7 +86,7 @@ const SignUpForm = () => {
 
   return (
     <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-      <AuthFormHeader title="Sign Up" desc="Enter your details to sign up!" />
+      <AuthFormHeader title={isUser ? "Sign Up" : "Artist Sign Up"} desc="Enter your details to sign up!" />
       {showOtpBox ?
         <OtpVerification
           email={formData.email}
@@ -157,7 +165,7 @@ const SignUpForm = () => {
             </div>
           </form>
         )}
-      <AuthBottomLink isSignup={true} />
+      <AuthBottomLink isSignup={true} isUser={!isUser} />
     </div>
   )
 }

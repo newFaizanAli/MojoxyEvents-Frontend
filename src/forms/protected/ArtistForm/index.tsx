@@ -5,9 +5,11 @@ import { Button, FormSelect, ImageUpload, Input, Label, Switch, Radio } from "..
 import { AchievementInput, GallerySection, LanguageInput, TagSelector } from "../../../components/forms";
 import { SuspenseComp } from "../../../components/shared";
 
-const ArtistForm = () => {
+const ArtistForm = ({ stage_name }: { stage_name: string }) => {
 
     const [activeTab, setActiveTab] = useState("basic");
+
+
 
     const {
         artist, form, users, categories, onSubmit,
@@ -17,7 +19,10 @@ const ArtistForm = () => {
         performLocations, setPerformLocations,
         achievements, setAchievements,
         artistGallery, setArtistGallery,
-    } = useArtistForm();
+        isArtistRole
+    } = useArtistForm(stage_name);
+
+
 
     const { register, handleSubmit, control, watch, setValue, formState: { errors } } = form;
 
@@ -60,11 +65,11 @@ const ArtistForm = () => {
                                 {errors.stage_name && <p className="text-red-500">{errors.stage_name.message}</p>}
                             </div>
 
-                            <div>
+                            {!isArtistRole && <div>
                                 <Label>User</Label>
                                 <FormSelect options={userOptions} {...register("user")} />
                             </div>
-
+                            }
                             <div>
                                 <Label>Category</Label>
                                 <FormSelect options={categoryOptions} {...register("category")} />
@@ -177,9 +182,14 @@ const ArtistForm = () => {
                     )}
 
                     <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-                        <Button size="sm" variant="primary" type="submit">
-                            {artist ? "Update" : "Save"} Artist
-                        </Button>
+                        {(!isArtistRole || artist) && (
+                            <Button size="sm" variant="primary" type="submit">
+                                {artist ? "Update" : "Save"} Artist
+                            </Button>
+                        )}
+                        {isArtistRole && !artist && (
+                            <p className="text-sm text-gray-400">Loading your artist profile...</p>
+                        )}
                     </div>
                 </form>
             </div>

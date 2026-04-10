@@ -2,14 +2,14 @@ import { PageMeta } from "../../components/shared"
 import { SignUpForm } from "../../forms/auth"
 
 
-const SignUpPage = () => {
+const UserSignUpPage = () => {
     return (
         <div>
             <PageMeta title="Sign Up" />
 
-            <SignUpForm />
+            <SignUpForm role="user" />
         </div>
     )
 }
 
-export default SignUpPage
+export default UserSignUpPage

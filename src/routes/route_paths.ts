@@ -10,7 +10,10 @@ export const ROUTES_PATHS = {
   AUTH: {
     BASE: "/auth",
     SIGNIN: "/auth/signin",
-    SIGNUP: "/auth/signup",
+    SIGNUP: {
+      USER: "/auth/signup/user",
+      ARTIST: "/auth/signup/artist",
+    },
     FORGOT_PASSWORD: "/auth/forgot-password",
     VERIFY_OTP: (email: string) => `/auth/verify-otp/${email}`,
     RESET: (token: string) => `/auth/reset-password/${token}`,
@@ -26,9 +29,9 @@ export const ROUTES_PATHS = {
       PROFILE: "/dashboard/user/profile",
     },
     ARTIST: {
-      BASE: (stage_name?: string) =>
-        stage_name ? `/dashboard/artist/${stage_name}` : "/dashboard/artist",
+      BASE: "/dashboard/artist",
       LIST: "/dashboard/artist/list",
+      PROFILE: "/dashboard/artist/profile",
       BOOKING: {
         LIST: "/dashboard/artist/booking/list",
       },

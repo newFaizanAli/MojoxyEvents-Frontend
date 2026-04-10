@@ -8,7 +8,10 @@ import { artistParseOrAppend } from "../utilities/functions";
 interface ArtistState {
   artists: Artist[];
   isFetched: boolean;
+  isArtistProfileFetched: boolean;
+  artistProfile: Artist | null;
   fetchArtists: () => Promise<void>;
+  fetchArtistProfile: () => Promise<Artist | null>;
   addArtist: (artist: Omit<Artist, "_id">) => Promise<void>;
   fetchArtistByStageName: (stage_name: string) => Promise<Artist | null>;
   fetchArtistBookingDetails: (artistId: string) => Promise<string[] | null>;
@@ -19,6 +22,9 @@ interface ArtistState {
 const useArtistStore = create<ArtistState>((set, get) => ({
   artists: [],
   isFetched: false,
+
+  isArtistProfileFetched: false,
+  artistProfile: null,
 
   fetchArtists: async () => {
     const { isFetched } = get();
@@ -44,6 +50,25 @@ const useArtistStore = create<ArtistState>((set, get) => ({
     } catch (err) {
       console.error(err);
       toastError("Failed to fetch artist");
+    }
+  },
+
+  fetchArtistProfile: async () => {
+    try {
+      const response = await axios.get(
+        `${END_POINT_API?.ARTISTS?.BASE}/profile`,
+      );
+
+      set({
+        artistProfile: response.data,
+        isArtistProfileFetched: true,
+      });
+
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      toastError("Failed to fetch artist");
+      return null;
     }
   },
 

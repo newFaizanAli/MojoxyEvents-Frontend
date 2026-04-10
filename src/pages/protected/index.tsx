@@ -1,47 +1,47 @@
 import { lazy } from "react";
 
 const DashboardPage = lazy(() => import("./dashbaord"))
-// artist
-const ArtistBooking = lazy(() => import("./artist/Booking"))
-const ArtistPage = lazy(() => import("./artist/ArtistPage"))
-const ArtistsList = lazy(() => import("./artist/ArtistsList"))
-const AristBookingsList = lazy(() => import("./artist/BookingList"))
+
+import {
+    ArtistUpdateProfilePage, ArtistBooking,
+    ArtistPage, ArtistsList, AristBookingsList
+} from "./artist"
 // user
-const UserPage = lazy(() => import("./user/UserPage"))
-const UsersList = lazy(() => import("./user/UsersList"))
-const ProfilePage = lazy(() => import("./user/ProfilePage"))
+import { UserPage, UsersList, ProfilePage } from "./user"
 // category
-const CategoryPage = lazy(() => import("./category/CategoryPage"))
-const CategoriesList = lazy(() => import("./category/CategoriesList"))
+import { CategoryPage, CategoriesList } from "./category"
 // package 
-const PackagePage = lazy(() => import("./package/PackagePage"))
-const PackagesList = lazy(() => import("./package/PackagesList"))
+import { PackagePage, PackagesList } from "./package"
 // booking
-const BookingPage = lazy(() => import("./booking/BookingPage"))
-const BookingsList = lazy(() => import("./booking/BookingsList"))
-const SelfBookingsList = lazy(() => import("./booking/SelfBookingsList"))
-const ViewBookingPage = lazy(() => import("./booking/ViewBookingPage"))
+import { BookingPage, BookingsList, ViewBookingPage, SelfBookingsList } from "./booking"
 // payment
-const PaymentPage = lazy(() => import("./payment/PaymentPage"))
-const PaymentList = lazy(() => import("./payment/PaymentsList"))
+import { PaymentPage, PaymentList } from "./payment"
 
 export {
     DashboardPage,
+    // user
     UserPage,
     UsersList,
+    // profile
     ProfilePage,
+    //artist
+    ArtistUpdateProfilePage,
     ArtistBooking,
     ArtistPage,
     ArtistsList,
     AristBookingsList,
+    // category
     CategoryPage,
     CategoriesList,
+    // package
     PackagePage,
     PackagesList,
+    // booking
     BookingPage,
     BookingsList,
     ViewBookingPage,
     SelfBookingsList,
+    // payment
     PaymentPage,
     PaymentList
 }

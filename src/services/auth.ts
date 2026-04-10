@@ -48,7 +48,7 @@ export const authService = {
     });
     const data = response?.data;
 
-    return { success: data.success };
+    return { success: data.success, user: data.data };
   },
 
   async generateOTP(email: string) {

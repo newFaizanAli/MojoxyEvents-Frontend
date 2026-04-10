@@ -3,8 +3,10 @@ import { ROUTES_PATHS } from "../../../routes/route_paths";
 
 const AuthBottomLink = ({
     isSignup = false,
+    isUser = true
 }: {
     isSignup?: boolean;
+    isUser?: boolean
 }) => {
     return (
         <div className="mt-6 space-y-3 text-center">
@@ -16,12 +18,27 @@ const AuthBottomLink = ({
                     to={
                         isSignup
                             ? ROUTES_PATHS.AUTH.SIGNIN
-                            : ROUTES_PATHS.AUTH.SIGNUP
+                            : ROUTES_PATHS.AUTH.SIGNUP.USER
                     }
                     className="font-medium text-brand-500 hover:text-brand-600 transition"
                 >
                     {isSignup ? "Sign In" : "Sign Up"}
                 </Link>
+            </p>
+
+
+            <p className="text-sm text-gray-600">
+                {
+
+                    !isUser &&
+                    <Link
+                        to={ROUTES_PATHS.AUTH.SIGNUP.ARTIST}
+                        className="font-medium text-brand-500 hover:text-brand-600 transition"
+                    >
+                        Sign Up as Artist
+                    </Link>
+
+                }
             </p>
 
             {/* Divider */}

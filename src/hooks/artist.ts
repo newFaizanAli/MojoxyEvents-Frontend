@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
-import { useArtistStore, useCategoryStore, useUsersStore } from "../store";
+import {
+  useArtistStore,
+  useCategoryStore,
+  useProfileStore,
+  useUsersStore,
+} from "../store";
 import {
   Artist,
   ArtistAchievement,
@@ -10,8 +14,10 @@ import {
   ArtistLanguage,
 } from "../types";
 
-export function useArtistForm() {
-  const { stage_name } = useParams<{ stage_name?: string }>();
+export function useArtistForm(stage_name_param: string | null) {
+  const stage_name = stage_name_param;
+
+  const { profile } = useProfileStore();
   const { addArtist, updateArtist, fetchArtistByStageName } = useArtistStore();
   const { users, isFetched: isUserFetched, fetchUsers } = useUsersStore();
   const {
@@ -19,6 +25,10 @@ export function useArtistForm() {
     isFetched: isCatFetched,
     fetchCategories,
   } = useCategoryStore();
+
+  const role = profile?.role;
+
+  const isArtistRole = role === "artist";
 
   const [artist, setArtist] = useState<Artist | null>(null);
   const [artistLanguage, setArtistLanguage] = useState<ArtistLanguage[]>([]);
@@ -52,9 +62,11 @@ export function useArtistForm() {
   const { reset } = form;
 
   useEffect(() => {
-    if (!isUserFetched) fetchUsers();
+    if (!isArtistRole) {
+      if (!isUserFetched) fetchUsers();
+    }
     if (!isCatFetched) fetchCategories();
-  }, [isUserFetched, isCatFetched, fetchUsers, fetchCategories]);
+  }, [isUserFetched, isCatFetched, fetchUsers, fetchCategories, isArtistRole]);
 
   useEffect(() => {
     const load = async () => {
@@ -74,7 +86,7 @@ export function useArtistForm() {
           setArtistGallery(fetched.gallery ?? []);
           setArtistGenres(fetched.genres ?? []);
         }
-      } else {
+      } else if (isArtistRole) {
         setArtist(null);
         reset(defaultValues);
         setArtistLanguage([]);
@@ -86,7 +98,7 @@ export function useArtistForm() {
       }
     };
     load();
-  }, [stage_name, fetchArtistByStageName, reset]);
+  }, [stage_name, fetchArtistByStageName, reset, isArtistRole]);
 
   // Generic tag helpers
   const addTag = <T>(
@@ -147,6 +159,8 @@ export function useArtistForm() {
     setArtistGallery,
     addTag,
     removeTag,
+    role,
+    isArtistRole,
   };
 }
 

@@ -12,12 +12,14 @@ const AristsTable = () => {
 
     const { artists, fetchArtists, deleteArtist, isFetched } = useArtistStore();
 
-    const handleEdit = useCallback(
-        (stage_name: string) => {
-            navigate(ROUTES_PATHS.DASHBOARD.ARTIST.BASE(stage_name));
-        },
-        [navigate]
-    );
+    // const handleEdit = useCallback(
+    //     (stage_name: string) => {
+    //         navigate(ROUTES_PATHS.DASHBOARD.ARTIST.BASE, {
+    //             state: { stage_name },
+    //         });
+    //     },
+    //     [navigate]
+    // );
 
     const handleDelete = useCallback(
         (id: string) => {
@@ -35,18 +37,23 @@ const AristsTable = () => {
         () => [
             {
                 title: "Image",
-                render: (a: {
-                    img_link: File | string;
-                }) => (
-                    <img
-                        src={
-                            a.img_link instanceof File
-                                ? URL.createObjectURL(a.img_link)
-                                : a.img_link || ""
-                        }
-                        className="max-h-16 mx-auto rounded border"
-                    />
-                ),
+                render: (a: { img_link: File | string }) => {
+                    const src =
+                        a.img_link instanceof File
+                            ? URL.createObjectURL(a.img_link)
+                            : a.img_link || null;
+
+                    return src ? (
+                        <img
+                            src={src}
+                            className="max-h-16 mx-auto rounded border"
+                        />
+                    ) : (
+                        <div className="">
+                            No Image
+                        </div>
+                    );
+                }
             },
             {
                 title: "Stage Name",
@@ -79,7 +86,9 @@ const AristsTable = () => {
                             variant="outline"
                             className="me-2"
                             onClick={() =>
-                                navigate(ROUTES_PATHS?.DASHBOARD?.ARTIST?.BASE(a?.stage_name))
+                                navigate(ROUTES_PATHS?.DASHBOARD?.ARTIST?.BASE, {
+                                    state: { stage_name: a?.stage_name }
+                                })
                             }
                         >
                             <PencilIcon className="h-4 w-4 me-2" />
@@ -97,13 +106,13 @@ const AristsTable = () => {
                 ),
             },
         ],
-        [handleEdit, handleDelete]
+        [handleDelete]
     );
 
     return (
         <DataTable<Artist>
             title="Artist"
-            addPath={ROUTES_PATHS.DASHBOARD.ARTIST.BASE("")}
+            addPath={ROUTES_PATHS.DASHBOARD.ARTIST.BASE}
             data={artists}
             isFetched={isFetched}
             fetchData={fetchArtists}

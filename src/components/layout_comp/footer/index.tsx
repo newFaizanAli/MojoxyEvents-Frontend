@@ -95,7 +95,7 @@ const Footer = React.memo(() => {
                         <ul className="space-y-2">
                             <li>
                                 <Link
-                                    to={ROUTES_PATHS?.AUTH.SIGNUP}
+                                    to={ROUTES_PATHS?.AUTH.SIGNUP.ARTIST}
                                     className="text-gray-300 hover:text-white transition-colors text-sm"
                                 >
                                     Become an Artist
